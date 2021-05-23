@@ -1,0 +1,37 @@
+--Obtener la lista de precios de todos los productos
+
+SELECT P.NAME            Producto,
+       InvProd.priceunit Precio
+FROM   product P
+       INNER JOIN inventoryproduct InvProd
+               ON P.id = InvProd.productid
+
+--Obtener la lista de productos cuya existencia en el inventario haya llegado al  mínimo permitido (5 unidades)
+SELECT P.NAME        Producto,
+       InvProd.stock Cantidad
+FROM   product P
+       INNER JOIN inventoryproduct InvProd
+               ON P.id = InvProd.productid
+WHERE  InvProd.stock <= 5 
+
+--Obtener una lista de clientes no mayores de 35 años que hayan realizado compras entre  el 1 de febrero de 2000 y el 25 de mayo de 2000 
+SELECT C.FullName  Cliente,c.Age Edad, I.DatePurchase 'Fecha de compra'
+FROM   Customer C
+       INNER JOIN Invoice I
+               ON C.id = I.CustomerId
+WHERE  C.Age <= 35 and I.DatePurchase   between '20000102' and '20000525'; 
+
+--Obtener el valor total vendido por cada producto en el año 2000  
+Select sum(IVD.price) total,P.Name
+from Invoice I
+inner join InvoiceDetail IVD
+on IVD.InvoiceId  = I.Id
+inner join InventoryProduct IP
+on IVD.InventoryProductId = IP.Id
+inner join Product P
+on P.Id = IP.ProductId
+where I.DatePurchase   between '20000102' and '20000525'; 
+group by P.Id,P.Name
+
+
+--Obtener la última fecha de compra de un cliente y según su frecuencia de compra  estimar en qué fecha podría volver a comprar. 

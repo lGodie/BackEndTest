@@ -1,0 +1,170 @@
+USE [test]
+GO
+/****** Object:  Table [dbo].[Category]    Script Date: 23/05/2021 8:36:54 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Category](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Description] [nvarchar](300) NULL,
+	[Code] [nvarchar](100) NOT NULL,
+	[CreatedAt] [datetime] NOT NULL,
+	[ModifiedAt] [datetime] NULL,
+ CONSTRAINT [PK_Category] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Customer]    Script Date: 23/05/2021 8:36:54 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Customer](
+	[Id] [uniqueidentifier] NOT NULL,
+	[FullName] [nvarchar](max) NOT NULL,
+	[Cedula] [nvarchar](max) NOT NULL,
+	[Age] [int] NOT NULL,
+	[CreatedAt] [datetime] NULL,
+	[ModifiedAt] [datetime] NULL,
+ CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[InventoryProduct]    Script Date: 23/05/2021 8:36:54 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[InventoryProduct](
+	[Id] [uniqueidentifier] NOT NULL,
+	[ProductId] [uniqueidentifier] NOT NULL,
+	[Stock] [int] NOT NULL,
+	[CreatedAt] [datetime] NULL,
+	[ModifiedAt] [datetime] NULL,
+	[PriceUnit] [int] NOT NULL,
+ CONSTRAINT [PK_InventoryProduct] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Invoice]    Script Date: 23/05/2021 8:36:54 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Invoice](
+	[Id] [uniqueidentifier] NOT NULL,
+	[CustomerId] [uniqueidentifier] NOT NULL,
+	[Total] [int] NULL,
+	[IsCancelled] [bit] NULL,
+	[DatePurchase] [datetime] NOT NULL,
+	[CreatedAt] [datetime] NULL,
+	[ModifiedAt] [datetime] NULL,
+ CONSTRAINT [PK_Invoice] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[InvoiceDetail]    Script Date: 23/05/2021 8:36:54 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[InvoiceDetail](
+	[Id] [uniqueidentifier] NOT NULL,
+	[InvoiceId] [uniqueidentifier] NOT NULL,
+	[InventoryProductId] [uniqueidentifier] NOT NULL,
+	[Quantity] [int] NULL,
+	[price] [int] NULL,
+	[CreatedAt] [datetime] NULL,
+	[ModifiedAt] [datetime] NULL,
+ CONSTRAINT [PK_InvoiceDetail] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 23/05/2021 8:36:54 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nchar](120) NOT NULL,
+	[Code] [nvarchar](50) NOT NULL,
+	[CategoryId] [uniqueidentifier] NULL,
+	[Description] [nvarchar](300) NOT NULL,
+	[CreatedAt] [datetime] NULL,
+	[ModifiedAt] [datetime] NULL,
+ CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[Category] ([Id], [Name], [Description], [Code], [CreatedAt], [ModifiedAt]) VALUES (N'134341b8-2c13-4f1e-6908-08d91d782ce4', N'Deportiva', N'Solo para deporte', N'001', CAST(N'2021-05-22T18:20:23.570' AS DateTime), NULL)
+GO
+INSERT [dbo].[Category] ([Id], [Name], [Description], [Code], [CreatedAt], [ModifiedAt]) VALUES (N'd83a345f-5dcc-4845-6909-08d91d782ce4', N'Camisas', N'Para todos', N'002', CAST(N'2021-05-22T18:20:23.570' AS DateTime), NULL)
+GO
+INSERT [dbo].[Category] ([Id], [Name], [Description], [Code], [CreatedAt], [ModifiedAt]) VALUES (N'758138dc-6afa-4537-690a-08d91d782ce4', N'Pantalones', N'Para todos', N'003', CAST(N'2021-05-22T18:20:23.570' AS DateTime), NULL)
+GO
+INSERT [dbo].[Customer] ([Id], [FullName], [Cedula], [Age], [CreatedAt], [ModifiedAt]) VALUES (N'4570f6f2-4486-4107-bf07-6ad2e6a737ad', N'Diego Zapata', N'1524566', 25, CAST(N'2021-05-22T18:20:30.323' AS DateTime), NULL)
+GO
+INSERT [dbo].[Customer] ([Id], [FullName], [Cedula], [Age], [CreatedAt], [ModifiedAt]) VALUES (N'f8bafd14-9cbc-4e41-ad73-e1981c12a795', N'Alejandro Vanegas', N'1569844', 40, CAST(N'2021-05-22T18:20:30.323' AS DateTime), NULL)
+GO
+INSERT [dbo].[InventoryProduct] ([Id], [ProductId], [Stock], [CreatedAt], [ModifiedAt], [PriceUnit]) VALUES (N'b9c689f7-c874-4268-8b08-3d2edde092eb', N'9bac2f9c-1d88-4dc8-c338-08d91d7830e9', 9, CAST(N'2021-05-22T18:20:30.323' AS DateTime), NULL, 130000)
+GO
+INSERT [dbo].[InventoryProduct] ([Id], [ProductId], [Stock], [CreatedAt], [ModifiedAt], [PriceUnit]) VALUES (N'c1597d3f-c49f-4fcf-a69b-5d37921fe3f2', N'fad39555-0c62-4f7d-c339-08d91d7830e9', 50, CAST(N'2021-05-22T18:20:30.323' AS DateTime), NULL, 25000)
+GO
+INSERT [dbo].[Invoice] ([Id], [CustomerId], [Total], [IsCancelled], [DatePurchase], [CreatedAt], [ModifiedAt]) VALUES (N'45ebf5f1-ad9f-479e-1c75-08d91da042b4', N'4570f6f2-4486-4107-bf07-6ad2e6a737ad', 260000, 1, CAST(N'2000-05-22T18:20:30.323' AS DateTime), CAST(N'2021-05-22T23:07:20.023' AS DateTime), NULL)
+GO
+INSERT [dbo].[Invoice] ([Id], [CustomerId], [Total], [IsCancelled], [DatePurchase], [CreatedAt], [ModifiedAt]) VALUES (N'00dc7b8b-e5c5-41c7-860f-46845919ed6f', N'4570f6f2-4486-4107-bf07-6ad2e6a737ad', 300000, 0, CAST(N'2000-05-22T18:20:30.323' AS DateTime), CAST(N'2021-05-22T18:20:30.323' AS DateTime), NULL)
+GO
+INSERT [dbo].[Invoice] ([Id], [CustomerId], [Total], [IsCancelled], [DatePurchase], [CreatedAt], [ModifiedAt]) VALUES (N'3f511e99-8773-4579-b175-e38760093f25', N'4570f6f2-4486-4107-bf07-6ad2e6a737ad', 5000000, 0, CAST(N'2000-05-22T18:20:30.323' AS DateTime), CAST(N'2021-05-22T18:20:30.323' AS DateTime), NULL)
+GO
+INSERT [dbo].[InvoiceDetail] ([Id], [InvoiceId], [InventoryProductId], [Quantity], [price], [CreatedAt], [ModifiedAt]) VALUES (N'8b62a1e0-57d1-4c83-1eda-08d91da04c75', N'45ebf5f1-ad9f-479e-1c75-08d91da042b4', N'b9c689f7-c874-4268-8b08-3d2edde092eb', 1, 260000, CAST(N'2021-05-22T23:07:36.423' AS DateTime), NULL)
+GO
+INSERT [dbo].[InvoiceDetail] ([Id], [InvoiceId], [InventoryProductId], [Quantity], [price], [CreatedAt], [ModifiedAt]) VALUES (N'e2babf58-17b2-4ccb-b42c-7ce707e37a52', N'00dc7b8b-e5c5-41c7-860f-46845919ed6f', N'b9c689f7-c874-4268-8b08-3d2edde092eb', 5, 650000, CAST(N'2000-05-22T18:20:30.323' AS DateTime), NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Code], [CategoryId], [Description], [CreatedAt], [ModifiedAt]) VALUES (N'9bac2f9c-1d88-4dc8-c338-08d91d7830e9', N'Balón                                                                                                                   ', N'001', N'134341b8-2c13-4f1e-6908-08d91d782ce4', N'Para fútbol', CAST(N'2021-05-22T18:20:30.323' AS DateTime), NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Code], [CategoryId], [Description], [CreatedAt], [ModifiedAt]) VALUES (N'fad39555-0c62-4f7d-c339-08d91d7830e9', N'Camisa                                                                                                                  ', N'002', N'134341b8-2c13-4f1e-6908-08d91d782ce4', N'para niño', CAST(N'2021-05-22T18:20:30.323' AS DateTime), NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Code], [CategoryId], [Description], [CreatedAt], [ModifiedAt]) VALUES (N'c37bdfd4-41a3-4362-c33a-08d91d7830e9', N'Pantalon                                                                                                                ', N'003', N'134341b8-2c13-4f1e-6908-08d91d782ce4', N'para hombre', CAST(N'2021-05-22T18:20:30.323' AS DateTime), NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Code], [CategoryId], [Description], [CreatedAt], [ModifiedAt]) VALUES (N'6d570dc9-c3b4-4507-3c02-08d91db79e52', N'Pantaloneta                                                                                                             ', N'000100', NULL, N'Muy bonita', CAST(N'2021-05-23T01:54:32.107' AS DateTime), NULL)
+GO
+ALTER TABLE [dbo].[InventoryProduct]  WITH CHECK ADD  CONSTRAINT [FK_InventoryProduct_Product] FOREIGN KEY([ProductId])
+REFERENCES [dbo].[Product] ([Id])
+GO
+ALTER TABLE [dbo].[InventoryProduct] CHECK CONSTRAINT [FK_InventoryProduct_Product]
+GO
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_Customer] FOREIGN KEY([CustomerId])
+REFERENCES [dbo].[Customer] ([Id])
+GO
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_Customer]
+GO
+ALTER TABLE [dbo].[InvoiceDetail]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceDetail_InventoryProduct] FOREIGN KEY([InventoryProductId])
+REFERENCES [dbo].[InventoryProduct] ([Id])
+GO
+ALTER TABLE [dbo].[InvoiceDetail] CHECK CONSTRAINT [FK_InvoiceDetail_InventoryProduct]
+GO
+ALTER TABLE [dbo].[InvoiceDetail]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceDetail_Invoice] FOREIGN KEY([InvoiceId])
+REFERENCES [dbo].[Invoice] ([Id])
+GO
+ALTER TABLE [dbo].[InvoiceDetail] CHECK CONSTRAINT [FK_InvoiceDetail_Invoice]
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_Category] FOREIGN KEY([CategoryId])
+REFERENCES [dbo].[Category] ([Id])
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Category]
+GO
